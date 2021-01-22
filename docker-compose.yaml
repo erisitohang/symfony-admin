@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  php:
+    build:
+      context: ./docker/php
+    volumes:
+      - .:/srv
+    depends_on:
+      - mongodb
+  nginx:
+    build:
+      context: ./docker/nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - php
+    volumes:
+      - .:/srv
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - php
+  mongodb:
+    build:
+      context: ./docker/db
+      dockerfile: Dockerfile
+      args:
+        - mongodb_username=${MONGODB_USERNAME}
+        - mongodb_password=${MONGODB_PASSWORD}
+        - mongodb_initdb_database=${MONGO_INITDB_DATABASE}
+    volumes:
+      - ./.data/mongo:/data/db:rw
+    env_file:
+      - .env
+    ports:
+      - '27017:27017'
