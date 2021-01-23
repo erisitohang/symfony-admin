@@ -5,6 +5,9 @@ RUN apt-get update && apt-get install --no-install-recommends --no-install-sugge
         libicu-dev \
         libzip-dev \
         libsodium-dev \
+        libcurl4-openssl-dev \
+        pkg-config \
+        libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -xe \
