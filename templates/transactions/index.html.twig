@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}Transaction{% endblock %}
+
+{% block body %}
+    {% if transactions %}
+        <table id="transactions" class="table table-striped">
+            <thead>
+            <tr class="lead">
+                <th>Currency</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.currency }}</td>
+                    <td>{{ transaction.amount }}</td>
+                    <td>{{ transaction.status ? 'Paid' : 'Pending' }}</td>
+                    <td>
+                        <a href="/transaction/{{ transaction.id }}" class="btn btn-primary">Show</a>
+                        <a href="/transaction/edit/{{ transaction.id }}" class="btn btn-secondary" data-id="{{ transaction.id }}">Edit</a>
+                        <a href="#" class="btn btn-danger delete-transaction" data-id="{{ transaction.id }}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <p>No transactions to display</p>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

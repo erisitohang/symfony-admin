@@ -26,6 +26,11 @@ class User implements UserInterface
     protected $password;
 
     /**
+     * @MongoDB\Field(type="collection")
+     */
+    protected $roles;
+
+    /**
      * @MongoDB\ReferenceOne(targetDocument=Company::class, mappedBy="user")
      */
     private $company;
@@ -102,8 +107,21 @@ class User implements UserInterface
         // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
-    public function getRoles()
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        return 'company';
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 }

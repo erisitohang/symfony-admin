@@ -38,7 +38,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         for ($i = 0; $i < 2; $i++) {
-            $user = $this->user();
+            $user = $this->user($i);
             $address = $this->address();
             $company = $this->company($user, $address);
             $transaction1 = $this->transaction($company);
@@ -74,12 +74,15 @@ class AppFixtures extends Fixture
     }
 
     /**
+     * @param int $index
      * @return User
      */
-    private function user(): User
+    private function user(int $index): User
     {
+        $email = $index === 0 ? 'user@example.com' : $this->faker->email;
         $user = new User();
-        $user->setEmail($this->faker->email);
+        $user->setRoles(['ROLE_USER']);
+        $user->setEmail($email);
         $user->setPassword($this->passwordEncoder->encodePassword(
             $user,
             'password123'

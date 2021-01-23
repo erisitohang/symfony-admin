@@ -30,7 +30,7 @@ class Transaction
 	protected $amount;
 
 	/**
-	 * @MongoDB\Field(type="boolean")
+	 * @MongoDB\Field(type="bool")
 	 */
 	protected $status;
 
