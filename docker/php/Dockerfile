@@ -1,8 +1,10 @@
-FROM php:8.0-fpm
+FROM php:7.4-fpm
 
 RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y \
+        unzip \
         libicu-dev \
-        libzip-dev\
+        libzip-dev \
+        libsodium-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -xe \
@@ -11,8 +13,13 @@ RUN set -xe \
     && docker-php-ext-install \
         intl \
         opcache \
+        sodium \
         zip \
     && pecl install \
+        xdebug \
+        mongodb \
+    && docker-php-ext-enable \
+        xdebug \
         mongodb
 
 COPY php.ini /usr/local/etc/php/php.ini
