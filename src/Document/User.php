@@ -5,9 +5,10 @@ namespace App\Document;
 
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /** @MongoDB\Document */
-class User
+class User implements UserInterface
 {
     /**
      * @MongoDB\Id
@@ -25,7 +26,7 @@ class User
     protected $password;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument=Company::class, storeAs="id")
+     * @MongoDB\ReferenceOne(targetDocument=Company::class, mappedBy="user")
      */
     private $company;
 
@@ -83,5 +84,26 @@ class User
     public function setCompany($company): void
     {
         $this->company = $company;
+    }
+
+    public function getUsername()
+    {
+        return (string) $this->email;
+    }
+
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    public function getRoles()
+    {
+        return 'company';
     }
 }

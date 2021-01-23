@@ -14,6 +14,11 @@ class Transaction
 	 */
 	protected $id;
 
+    /**
+     * @MongoDB\ReferenceOne(targetDocument=Company::class, inversedBy="transactions")
+     */
+    private $company;
+
 	/**
 	 * @MongoDB\Field(type="string")
 	 */
@@ -35,6 +40,22 @@ class Transaction
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param mixed $company
+     */
+    public function setCompany($company): void
+    {
+        $this->company = $company;
     }
 
     /**

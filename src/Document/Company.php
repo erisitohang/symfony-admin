@@ -15,6 +15,11 @@ class Company
     protected $id;
 
     /**
+     * @MongoDB\ReferenceOne(targetDocument=User::class, inversedBy="company")
+     */
+    protected $user;
+
+    /**
      * @MongoDB\Field(type="string")
      */
     protected $name;
@@ -30,11 +35,32 @@ class Company
     protected $address;
 
     /**
+     * @MongoDB\ReferenceMany(targetDocument=Transaction::class, mappedBy="company")
+     */
+    private $transactions;
+
+    /**
      * @return mixed
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
     }
 
     /**
@@ -83,5 +109,21 @@ class Company
     public function setAddress($address): void
     {
         $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTransactions()
+    {
+        return $this->transactions;
+    }
+
+    /**
+     * @param mixed $transactions
+     */
+    public function setTransactions($transactions): void
+    {
+        $this->transactions = $transactions;
     }
 }
