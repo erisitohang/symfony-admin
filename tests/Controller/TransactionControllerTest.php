@@ -21,18 +21,38 @@ class TransactionControllerTest extends TestCase
     public function testVisitingWhileLoggedIn()
     {
         $client = static::createClient();
-
-        // get or create the user somehow (e.g. creating some users only
-        // for tests while loading the test fixtures)
-        /** @var UserRepository $userRepository */
-        $userRepository = static::$container->get(UserRepository::class);
-        $testUser = $userRepository->findOneByEmail('user@example.com');
-
-        $client->loginUser($testUser);
-
-        // user is now logged in, so you can test protected resources
+        $this->userLogin($client);
         $client->request('GET', '/transaction');
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Transaction');
+    }
+
+    public function testViewAddPage()
+    {
+        $client = static::createClient();
+        $userLogin = $this->userLogin($client);
+        $client->request('GET', '/transaction/add');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'New Transaction');
+    }
+
+    public function testViewReadPage()
+    {
+        $client = static::createClient();
+        $userLogin = $this->userLogin($client);
+        $transactionId = $this->getTransactionId($userLogin);
+        $client->request('GET', '/transaction/' . $transactionId);
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h4', 'Transaction ID: '. $transactionId);
+    }
+
+    public function testViewEditPage()
+    {
+        $client = static::createClient();
+        $userLogin = $this->userLogin($client);
+        $transactionId = $this->getTransactionId($userLogin);
+        $client->request('GET', '/transaction/edit/' . $transactionId);
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Edit Transaction');
     }
 }

@@ -21,6 +21,6 @@ class TransactionType extends AbstractType
             ->add('currency', CurrencyType::class)
             ->add('amount', NumberType::class)
             ->add('status', CheckboxType::class, ['required' => false])
-            ->add('save', SubmitType::class, ['label' => 'Add Transaction']);
+            ->add('save', SubmitType::class, ['label' => 'Save']);
     }
 }

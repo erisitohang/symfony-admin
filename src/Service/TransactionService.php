@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use App\Document\Company;
 use App\Document\Transaction;
 use App\Repository\TransactionRepository;
 
@@ -27,11 +28,34 @@ class TransactionService
      * @return Transaction
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function create(Transaction $transaction): Transaction
+    public function createOrUpdate(Transaction $transaction): Transaction
     {
         $this->repository->getDocumentManager()->persist($transaction);
         $this->repository->getDocumentManager()->flush();
 
         return $transaction;
+    }
+
+    /**
+     * @param string $id
+     * @param Company $company
+     * @return Transaction|null
+     */
+    public function getByIdAndCompany(string $id, Company $company): ? Transaction
+    {
+        return $this->repository->findOneByIdAndCompany($id, $company);
+    }
+
+    /**
+     * @param Transaction $transaction
+     * @return Transaction
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function delete(Transaction $transaction): bool
+    {
+        $this->repository->getDocumentManager()->remove($transaction);
+        $this->repository->getDocumentManager()->flush();
+
+        return true;
     }
 }

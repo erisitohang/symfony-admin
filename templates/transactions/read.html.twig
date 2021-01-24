@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block title %}Transaction{% endblock %}
+
+{% block body %}
+    {% if transaction %}
+        <h4> Transaction ID: {{ transaction.id }} </h4>
+        <div class="row">
+            <div class="col-3">Currency: </div>
+            <div class="col-9"> {{ transaction.currency }} </div>
+            <div class="col-3">Amount: </div>
+            <div class="col-9"> {{ transaction.amount }} </div>
+            <div class="col-3">Status: </div>
+            <div class="col-9"> {{ transaction.status ? 'Paid' : 'Pending' }} </div>
+        </div>
+    {% else %}
+        <p>No transaction to display</p>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

@@ -3,30 +3,55 @@
 
 {% block body %}
     {% if transactions %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
         <h1> Transaction </h1>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <a href="{{ path('app_transaction_add') }}" type="button" class="btn btn-primary float-right">Create</a>
+            </div>
+        </div>
         <table id="transactions" class="table table-striped">
             <thead>
             <tr class="lead">
                 <th>Currency</th>
-                <th>Amount</th>
                 <th>Status</th>
+                <th>Amount</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
+            {% set totalAmout = 0 %}
             {% for transaction in transactions %}
+                {% set totalAmout = totalAmout + transaction.amount %}
                 <tr>
                     <td>{{ transaction.currency }}</td>
-                    <td>{{ transaction.amount }}</td>
                     <td>{{ transaction.status ? 'Paid' : 'Pending' }}</td>
+                    <td>{{ transaction.amount|number_format(2, '.', ',') }}</td>
                     <td>
                         <a href="/transaction/{{ transaction.id }}" class="btn btn-primary">Show</a>
-                        <a href="/transaction/edit/{{ transaction.id }}" class="btn btn-secondary" data-id="{{ transaction.id }}">Edit</a>
-                        <a href="#" class="btn btn-danger delete-transaction" data-id="{{ transaction.id }}">Delete</a>
+                        <a href="/transaction/edit/{{ transaction.id }}" class="btn btn-secondary"
+                           data-id="{{ transaction.id }}">Edit</a>
+                        <a href="/transaction/delete/{{ transaction.id }}" class="btn btn-danger delete-transaction"
+                           data-id="{{ transaction.id }}">Delete</a>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
+            <tfoot>
+            <tr class="lead">
+                <th colspan="2" style="text-align:right">Total Amount:</th>
+                <th>{{ totalAmout|number_format(2, '.', ',') }}</th>
+                <th></th>
+            </tr>
+            </tfoot>
         </table>
 
     {% else %}
