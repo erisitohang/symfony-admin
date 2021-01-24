@@ -4,6 +4,7 @@ services:
   php:
     build:
       context: ./docker/php
+    container_name: po_php
     volumes:
       - .:/srv
     depends_on:
@@ -11,6 +12,7 @@ services:
   nginx:
     build:
       context: ./docker/nginx
+    container_name: po_ngix
     ports:
       - '80:80'
     depends_on:
@@ -28,6 +30,7 @@ services:
         - mongodb_username=${MONGODB_USERNAME}
         - mongodb_password=${MONGODB_PASSWORD}
         - mongodb_initdb_database=${MONGO_INITDB_DATABASE}
+    container_name: po_mongodb
     volumes:
       - ./.data/mongo:/data/db:rw
     env_file:
