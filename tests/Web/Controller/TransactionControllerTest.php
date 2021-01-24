@@ -1,13 +1,14 @@
 <?php
 
 
-namespace App\Tests\Controller;
+namespace App\Tests\Web\Controller;
 
 
-use App\Repository\UserRepository;
-use App\Tests\TestCase;
+use App\Document\Transaction;
+use App\Form\TransactionType;
+use App\Tests\WebTestCase;
 
-class TransactionControllerTest extends TestCase
+class TransactionControllerTest extends WebTestCase
 {
     public function testNonAuthAccessTransactionsPage()
     {

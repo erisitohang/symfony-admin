@@ -1,12 +1,11 @@
 <?php
 
+namespace App\Tests\Web\Controller;
 
-namespace App\Tests\Controller;
 
+use App\Tests\WebTestCase;
 
-use App\Tests\TestCase;
-
-class SecurityControllerTest extends TestCase
+class SecurityControllerTest extends WebTestCase
 {
     public function testShowLoginPage()
     {

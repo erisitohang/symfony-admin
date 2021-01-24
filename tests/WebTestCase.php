@@ -5,9 +5,9 @@ namespace App\Tests;
 
 
 use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as SymfonyWebTestCase;
 
-class TestCase extends WebTestCase
+class WebTestCase extends SymfonyWebTestCase
 {
     public function userLogin($client)
     {
