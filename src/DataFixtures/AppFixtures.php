@@ -9,6 +9,10 @@ use App\Document\Transaction;
 use Doctrine\Bundle\MongoDBBundle\Fixture\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
+use Faker\Provider\at_AT\Payment;
+use Faker\Provider\en_US\Person;
+use Faker\Provider\Internet;
+use Faker\Provider\Miscellaneous;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -27,11 +31,11 @@ class AppFixtures extends Fixture
     {
         $this->passwordEncoder = $passwordEncoder;
         $faker = new Generator();
-        $faker->addProvider(new \Faker\Provider\en_US\Person($faker));
+        $faker->addProvider(new Person($faker));
         $faker->addProvider(new \Faker\Provider\en_SG\Address($faker));
-        $faker->addProvider(new \Faker\Provider\at_AT\Payment($faker));
-        $faker->addProvider(new \Faker\Provider\Internet($faker));
-        $faker->addProvider(new \Faker\Provider\Miscellaneous($faker));
+        $faker->addProvider(new Payment($faker));
+        $faker->addProvider(new Internet($faker));
+        $faker->addProvider(new Miscellaneous($faker));
         $this->faker = $faker;
     }
 

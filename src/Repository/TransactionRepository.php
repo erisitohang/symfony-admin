@@ -27,15 +27,4 @@ class TransactionRepository extends ServiceDocumentRepository
             ->getRepository(Transaction::class)
             ->findOneBy(['company' => $company, 'id' => $id]);
     }
-
-    /**
-     * @param Transaction $transaction
-     * @return mixed
-     */
-    public function remove(Transaction $transaction)
-    {
-        return $this->getDocumentManager()
-            ->getRepository(Transaction::class)
-            ->removeTag($transaction);
-    }
 }

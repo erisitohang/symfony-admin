@@ -7,10 +7,11 @@ namespace App\Service;
 use App\Document\Company;
 use App\Document\Transaction;
 use App\Repository\TransactionRepository;
+use Doctrine\ODM\MongoDB\MongoDBException;
 
 class TransactionService
 {
-    private TransactionRepository $repository;
+    private $repository;
 
     /**
      * TransactionService constructor.
@@ -26,7 +27,7 @@ class TransactionService
      *
      * @param Transaction $transaction
      * @return Transaction
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function createOrUpdate(Transaction $transaction): Transaction
     {
@@ -48,8 +49,8 @@ class TransactionService
 
     /**
      * @param Transaction $transaction
-     * @return Transaction
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @return bool
+     * @throws MongoDBException
      */
     public function delete(Transaction $transaction): bool
     {
